@@ -26,8 +26,75 @@ final class ArrayTests: XCTestCase {
         XCTAssertEqual(grouped["odd"], [1,3,5,7,9])
     }
     
+    func testSubstringClosedRangeSafe() {
+        XCTAssertEqual(testArray[safe: -2...(-1)], ArraySlice<Int>())
+        XCTAssertEqual(testArray[safe: -1...3], testArray[0...3])
+        
+        XCTAssertEqual(testArray[safe: 0...0], testArray[0...0])
+        XCTAssertEqual(testArray[safe: 0...3], testArray[0...3])
+        XCTAssertEqual(testArray[safe: 3...5], testArray[3...5])
+        XCTAssertEqual(testArray[safe: 5...9], testArray[5...9])
+        XCTAssertEqual(testArray[safe: 9...9], testArray[9...9])
+        
+        XCTAssertEqual(testArray[safe: 5...10], testArray[5...9])
+        
+        XCTAssertEqual(testArray[safe: -1...10], testArray[0...9])
+        XCTAssertEqual(testArray[safe: 10...11], ArraySlice<Int>())
+    }
+    
+    func testSubstringRangeSafe() {
+        XCTAssertEqual(testArray[safe: -4..<(-2)], ArraySlice<Int>())
+        XCTAssertEqual(testArray[safe: -1..<0], ArraySlice<Int>())
+        XCTAssertEqual(testArray[safe: -1..<1], testArray[0..<1])
+        
+        XCTAssertEqual(testArray[safe: 0..<0], testArray[0..<0])
+        XCTAssertEqual(testArray[safe: 0..<5], testArray[0..<5])
+        XCTAssertEqual(testArray[safe: 3..<5], testArray[3..<5])
+        XCTAssertEqual(testArray[safe: 3..<9], testArray[3..<9])
+        XCTAssertEqual(testArray[safe: 3..<10], testArray[3..<10])
+        XCTAssertEqual(testArray[safe: 10..<10], testArray[10..<10])
+        
+        XCTAssertEqual(testArray[safe: 3..<11], testArray[3..<10])
+        XCTAssertEqual(testArray[safe: 12..<15], ArraySlice<Int>())
+        XCTAssertEqual(testArray[safe: -1..<11], testArray[0..<10])
+    }
+    
+    func testSubstringPartialRangeFromSafe() {
+        XCTAssertEqual(testArray[safe: (-1)...], testArray[0...])
+        
+        XCTAssertEqual(testArray[safe: 0...], testArray[0...])
+        XCTAssertEqual(testArray[safe: 3...], testArray[3...])
+        XCTAssertEqual(testArray[safe: 9...], testArray[9...])
+        XCTAssertEqual(testArray[safe: 10...], testArray[10...])
+        
+        XCTAssertEqual(testArray[safe: 11...], ArraySlice<Int>())
+    }
+    
+    func testSubstringPartialRangeThroughSafe() {
+        XCTAssertEqual(testArray[safe: ...(-1)], ArraySlice<Int>())
+        XCTAssertEqual(testArray[safe: ...0], testArray[...0])
+        XCTAssertEqual(testArray[safe: ...3], testArray[...3])
+        XCTAssertEqual(testArray[safe: ...8], testArray[...8])
+        XCTAssertEqual(testArray[safe: ...9], testArray[...9])
+        XCTAssertEqual(testArray[safe: ...10], testArray[...9])
+    }
+    
+    func testSubstringPartialRangeUpToSafe() {
+        XCTAssertEqual(testArray[safe: ..<(-1)], ArraySlice<Int>())
+        XCTAssertEqual(testArray[safe: ..<0], testArray[..<0])
+        XCTAssertEqual(testArray[safe: ..<3], testArray[..<3])
+        XCTAssertEqual(testArray[safe: ..<9], testArray[..<9])
+        XCTAssertEqual(testArray[safe: ..<10], testArray[..<10])
+        XCTAssertEqual(testArray[safe: ..<11], testArray[..<10])
+    }
+    
     static var allTests = [
         ("testSafeSubscript", testSafeSubscript),
         ("testGrouping", testGrouping),
+        ("testSubstringClosedRangeSafe", testSubstringClosedRangeSafe),
+        ("testSubstringRangeSafe", testSubstringRangeSafe),
+        ("testSubstringPartialRangeFromSafe", testSubstringPartialRangeFromSafe),
+        ("testSubstringPartialRangeThroughSafe", testSubstringPartialRangeThroughSafe),
+        ("testSubstringPartialRangeUpToSafe", testSubstringPartialRangeUpToSafe),
     ]
 }
