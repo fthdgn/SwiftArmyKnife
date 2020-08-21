@@ -19,7 +19,15 @@ final class ArrayTests: XCTestCase {
         XCTAssertEqual(testArray[safe: 10], nil)
     }
     
+    func testGrouping() {
+        let grouped = testArray.grouping(by: { $0 % 2 == 0 ? "even" : "odd" })
+        XCTAssertEqual(grouped.keys.count, 2)
+        XCTAssertEqual(grouped["even"], [2,4,6,8,10])
+        XCTAssertEqual(grouped["odd"], [1,3,5,7,9])
+    }
+    
     static var allTests = [
         ("testSafeSubscript", testSafeSubscript),
+        ("testGrouping", testGrouping),
     ]
 }
