@@ -103,6 +103,16 @@ final class StringTests: XCTestCase {
         XCTAssertEqual(testString[safe: ..<11], "testString")
     }
     
+    func testSplitString() {
+        let originalStrings = ["a", "b", "c", "d"]
+        let string = originalStrings.joined(separator: ",")
+        let splits = string.splitString(separator: ",")
+        XCTAssertEqual(splits.count, 4)
+        for i in 0..<4 {
+            XCTAssertEqual(splits[i], originalStrings[i])
+        }
+    }
+    
     static var allTests = [
         ("testSubstringClosedRange", testSubstringClosedRange),
         ("testSubstringClosedRangeSafe", testSubstringClosedRangeSafe),

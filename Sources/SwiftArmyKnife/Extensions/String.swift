@@ -76,4 +76,8 @@ public extension String {
             return self[...min(max(r.upperBound, 0), count - 1)]
         }
     }
+    
+    func splitString(separator: Character, maxSplits: Int = Int.max, omittingEmptySubsequences: Bool = true) -> [String] {
+        return split(separator: separator, maxSplits: maxSplits, omittingEmptySubsequences: omittingEmptySubsequences).map({ $0.asString })
+    }
 }
