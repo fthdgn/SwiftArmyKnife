@@ -8,7 +8,7 @@ final class ArrayTests: XCTestCase {
         XCTAssertEqual(testArray[safe: -1], nil)
         XCTAssertEqual(testArray[safe: 0], 1)
         XCTAssertEqual(testArray[safe: 1], 2)
-        XCTAssertEqual(testArray[safe: 2], 3)
+        XCTAssertEqual(testArray[safe: 2], 5)
         XCTAssertEqual(testArray[safe: 3], 4)
         XCTAssertEqual(testArray[safe: 4], 5)
         XCTAssertEqual(testArray[safe: 5], 6)
