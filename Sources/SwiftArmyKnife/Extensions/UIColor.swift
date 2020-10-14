@@ -1,5 +1,4 @@
 import Foundation
-#if !os(macOS)
 import UIKit
 
 extension UIColor {
@@ -43,7 +42,7 @@ extension UIColor {
         }
         let hex: String
         if (hexCode.starts(with: "#")) {
-            hex = hexCode.substring(from: 1)
+            hex = hexCode[1...]
         } else {
             return nil
         }
@@ -59,4 +58,3 @@ extension UIColor {
         }
     }
 }
-#endif

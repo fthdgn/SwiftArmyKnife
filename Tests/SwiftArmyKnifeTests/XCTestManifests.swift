@@ -6,6 +6,7 @@ public func allTests() -> [XCTestCaseEntry] {
         testCase(StringTests.allTests),
         testCase(ArrayTests.allTests),
         testCase(SubstringTests.allTests),
+        testCase(UIColorTests.allTests),
     ]
 }
 #endif
