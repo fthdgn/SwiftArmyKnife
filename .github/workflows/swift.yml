@@ -16,4 +16,4 @@ jobs:
     - name: Generate xcodeproj
       run: swift package generate-xcodeproj
     - name: Run tests
-      run: xcodebuild test -destination 'name=iPhone 12' -scheme 'SwiftArmKnife-Package'
+      run: xcodebuild test -destination 'name=iPhone 12' -scheme 'SwiftArmyKnife-Package'
