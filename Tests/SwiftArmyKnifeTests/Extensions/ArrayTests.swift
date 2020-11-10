@@ -88,6 +88,11 @@ final class ArrayTests: XCTestCase {
         XCTAssertEqual(testArray[safe: ..<11], testArray[..<10])
     }
     
+    func testDeduped() {
+        let array = [9,5,4,2,7,6,5,6,2,4,9,5,2]
+        XCTAssertEqual([9,5,4,2,7,6], array.deduped())
+    }
+    
     static var allTests = [
         ("testSafeSubscript", testSafeSubscript),
         ("testGrouping", testGrouping),
@@ -96,5 +101,6 @@ final class ArrayTests: XCTestCase {
         ("testSubstringPartialRangeFromSafe", testSubstringPartialRangeFromSafe),
         ("testSubstringPartialRangeThroughSafe", testSubstringPartialRangeThroughSafe),
         ("testSubstringPartialRangeUpToSafe", testSubstringPartialRangeUpToSafe),
+        ("testDeduped", testDeduped),
     ]
 }
