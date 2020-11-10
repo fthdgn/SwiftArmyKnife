@@ -48,6 +48,18 @@ public extension Array {
         }
     }
     
+    func deduped(by block: (Element, Element) throws -> Bool) rethrows -> [Element] {
+        var result: [Element] = []
+        for value in self {
+            if (try result.first(where: { (x) -> Bool in
+                return try block(x, value)
+            }) == nil) {
+                result.append(value)
+            }
+        }
+        return result
+    }
+    
 }
 
 public extension Array where Element: Equatable {

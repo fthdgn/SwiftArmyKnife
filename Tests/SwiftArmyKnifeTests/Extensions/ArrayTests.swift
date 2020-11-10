@@ -93,6 +93,33 @@ final class ArrayTests: XCTestCase {
         XCTAssertEqual([9,5,4,2,7,6], array.deduped())
     }
     
+    struct Item {
+        let id: Int
+        let name: String
+    }
+    
+    func testDedupedBy() {
+        let array: [Item] = [.init(id: 1, name: "a"), .init(id: 2, name: "b"), .init(id: 1, name: "k")]
+        let deduped = array.deduped(by: { $0.id == $1.id })
+        XCTAssertEqual(2, deduped.count)
+        XCTAssertEqual(1, deduped[0].id)
+        XCTAssertEqual("a", deduped[0].name)
+        
+        XCTAssertEqual(2, deduped[1].id)
+        XCTAssertEqual("b", deduped[1].name)
+    }
+    
+    func testDedupedByRethrows() {
+        enum MyError: Error {
+            case error
+        }
+        
+        let array: [Item] = [.init(id: 1, name: "a"), .init(id: 2, name: "b"), .init(id: 1, name: "k")]
+        XCTAssertThrowsError(try array.deduped(by: { _, _ in throw MyError.error })) { error in
+            XCTAssertEqual(error as! MyError, MyError.error)
+        }
+    }
+    
     static var allTests = [
         ("testSafeSubscript", testSafeSubscript),
         ("testGrouping", testGrouping),
@@ -102,5 +129,7 @@ final class ArrayTests: XCTestCase {
         ("testSubstringPartialRangeThroughSafe", testSubstringPartialRangeThroughSafe),
         ("testSubstringPartialRangeUpToSafe", testSubstringPartialRangeUpToSafe),
         ("testDeduped", testDeduped),
+        ("testDedupedBy", testDedupedBy),
+        ("testDedupedByRethrows", testDedupedByRethrows),
     ]
 }
